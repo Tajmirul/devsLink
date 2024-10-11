@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Setup
 
-## Getting Started
+Follow these steps to run the application locally:
 
-First, run the development server:
+## 1. Setup the Database
+
+-   Install PostgreSQL locally or use the Vercel PostgreSQL connection string.
+-   Ensure that the `.env` file contains the correct `DATABASE_URL` for your local or remote PostgreSQL instance.
+
+Example for a local setup:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+DATABASE_URL=postgres://username:password@localhost:5432/dbname
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 2. Setup Vercel Blob Storage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+-   Create a folder called dev-links in the blob storage.
+-   Add the `BLOB_READ_WRITE_TOKEN` to the .env file. You can find the URL and credentials from your Vercel Blob Storage setup.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+BLOB_READ_WRITE_TOKEN=''
+```
 
-## Learn More
+## 3. Setup Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+Ensure all necessary environment variables are defined in the .env file, including:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   `DATABASE_URL` The PostgreSQL connection string.
+-   `BLOB_STORAGE_URL` URL to the blob storage folder.
+-   `NEXTAUTH_`s for authentication
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-key
+```
 
-## Deploy on Vercel
+## 4. Run the Application
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Install dependencies:
+    ```bash
+    npm install
+    ```
+2. Deploy database migrations:
+    ```bash
+    npx prisma migrate deploy
+    ```
+3. Generate the Prisma client:
+    ```bash
+    npx prisma generate
+    ```
+4. Start the development server:
+    ```bash
+    npm run dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The app should now be running at http://localhost:3000.
