@@ -15,6 +15,8 @@ DATABASE_URL=postgres://username:password@localhost:5432/dbname
 
 ## 2. Setup Vercel Blob Storage
 
+We used Vercel Blob storage because serverless function does support local file storage.
+
 -   Create a folder called dev-links in the blob storage.
 -   Add the `BLOB_READ_WRITE_TOKEN` to the .env file. You can find the URL and credentials from your Vercel Blob Storage setup.
 

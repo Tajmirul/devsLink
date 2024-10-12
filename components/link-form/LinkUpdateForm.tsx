@@ -2,78 +2,21 @@
 import Button from '@/components/button';
 import { SelectInput } from '@/components/input/SelectInput';
 import { formikPropsGenerator } from '@/utils/formik-props-generator';
-import { useFormik } from 'formik';
 import { Equal, Link } from 'lucide-react';
 import { platformInfo } from '@/utils/platformInfo';
 import { PlatformType } from '@prisma/client';
 import { Input } from '@/components/input';
-import { updateLinksAction } from '@/actions/links';
-import { useSession } from 'next-auth/react';
-import toast from 'react-hot-toast';
-import {
-    linkUpdateDto,
-    LinkUpdateDtoType,
-} from '@/app/[username]/(authWrapper)/links/link-update.dto';
-import { useEffect } from 'react';
+import { LinkUpdateDtoType } from '@/app/[username]/(authWrapper)/links/link-update.dto';
 import { ReactSortable } from 'react-sortablejs';
+import { useLinkUpdateFormik } from '@/hooks/useLinkUpdateFormik';
 
 interface Props {
-    links: {
-        platform: PlatformType;
-        url: string;
-    }[];
+    links: LinkUpdateDtoType['links'];
 }
 
-const initialValues: LinkUpdateDtoType = {
-    links: [{ platform: 'GITHUB', url: '' }],
-};
-
 const LinkUpdateForm = ({ links }: Props) => {
-    const { data: session } = useSession();
-
-    const formik = useFormik({
-        initialValues,
-        validationSchema: linkUpdateDto,
-        onSubmit: async (values) => {
-            try {
-                const links = await updateLinksAction(
-                    session!.user.id,
-                    values.links.map((link, index) => ({
-                        ...link,
-                        order: index,
-                    })),
-                );
-                formik.setValues({ links });
-
-                toast.success('Links are updated successfully');
-            } catch (error: any) {
-                console.error(error);
-                toast.error(error.message);
-            }
-        },
-    });
-
-    useEffect(() => {
-        if (!links.length) {
-            return;
-        }
-
-        formik.setValues({ links });
-    }, [links]);
-
-    const handleAddLink = () => {
-        formik.setFieldValue('links', [
-            ...(formik.values.links || []),
-            initialValues.links[0],
-        ]);
-    };
-    const handleRemoveLink = (index: number) => {
-        const newLinks = formik.values.links?.filter(
-            (_item, idx) => idx !== index,
-        );
-
-        formik.setFieldValue('links', newLinks);
-    };
+    const { formik, handleAddLink, handleRemoveLink } =
+        useLinkUpdateFormik(links);
 
     return (
         <form onSubmit={formik.handleSubmit} className="h-full flex flex-col">
