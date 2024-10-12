@@ -2,13 +2,14 @@
 import { signinDto, SigninDtoType } from './sign.dto';
 import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
 import { Input } from '@/components/input';
 import { Lock, User } from 'lucide-react';
 import Button from '@/components/button';
 import Link from 'next/link';
 import { formikPropsGenerator } from '@/utils/formik-props-generator';
+import { useEffect } from 'react';
 
 const initialValues: SigninDtoType = {
     username: '',
@@ -17,6 +18,7 @@ const initialValues: SigninDtoType = {
 
 const Page = () => {
     const router = useRouter();
+    const { data: session, update } = useSession();
 
     const formik = useFormik({
         initialValues,
@@ -34,16 +36,21 @@ const Page = () => {
                     return;
                 }
 
-                router.replace(`/${values.username}`);
+                await update();
             } catch (err: any) {
                 toast.error(err.message);
             }
         },
     });
 
+    useEffect(() => {
+        if (!session?.user) return;
+        router.replace(`/${session?.user.username}`);
+    }, [session?.user]);
+
     return (
         <div className="">
-            <h1 className="text-3xl font-semibold mb-2">Login </h1>
+            <h1 className="text-3xl font-semibold mb-2">Login</h1>
             <p>Welcome back! Let&apos;s get you started sharing your links!</p>
 
             <form onSubmit={formik.handleSubmit} className="mt-10 space-y-4">

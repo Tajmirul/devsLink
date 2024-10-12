@@ -24,7 +24,6 @@ export const updateLinksAction = async (
         order: number;
     }[],
 ) => {
-    console.log(links);
     await linkUpdateDto.validate({ links }, { abortEarly: false });
 
     // delete all links of the user that has id but not in the new links
