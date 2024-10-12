@@ -19,41 +19,41 @@ export const platformInfo: {
     GITHUB: {
         icon: <TbBrandGithubFilled />,
         color: 'bg-[#24292e] text-white',
-        regex: /(https:\/\/)?(www.)?github.com\/.+/,
+        regex: /https:\/\/?(www.)?github.com\/.+/,
     },
     TWITTER: {
         icon: <FaXTwitter />,
         color: 'bg-[#1da1f2] text-white',
-        regex: /(https:\/\/)?(www.)?twitter.com\/.+/,
+        regex: /https:\/\/?(www.)?twitter.com\/.+/,
     },
     LINKEDIN: {
         icon: <FaLinkedinIn size={16} />,
         color: 'bg-[#0077b5] text-white',
-        regex: /(https:\/\/)?(www.)?linkedin.com\/in\/.+/,
+        regex: /https:\/\/?(www.)?linkedin.com\/in\/.+/,
     },
     FACEBOOK: {
         icon: <FaFacebookF />,
         color: 'bg-[#1877f2] text-white',
-        regex: /(https:\/\/)?(www.)?facebook.com\/.+/,
+        regex: /https:\/\/?(www.)?facebook.com\/.+/,
     },
     INSTAGRAM: {
         icon: <RiInstagramFill />,
         color: 'bg-[#c13584] text-white',
-        regex: /(https:\/\/)?(www.)?instagram.com\/.+/,
+        regex: /https:\/\/?(www.)?instagram.com\/.+/,
     },
     YOUTUBE: {
         icon: <FaYoutube />,
         color: 'bg-[#ff0000] text-white',
-        regex: /(https:\/\/)?(www.)?youtube.com\/channel\/.+/,
+        regex: /https:\/\/?(www.)?youtube.com\/channel\/.+/,
     },
     WEBSITE: {
         icon: <FaLink />,
         color: 'bg-[#000000] text-white',
-        regex: /(https:\/\/)?(www.)?.+/,
+        regex: /https:\/\/?(www.)?.+/,
     },
     OTHER: {
         icon: <FaLink />,
         color: 'bg-[#000000] text-white',
-        regex: /(https:\/\/)?(www.)?.+/,
+        regex: /https:\/\/?(www.)?.+/,
     },
 };

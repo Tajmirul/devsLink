@@ -4,7 +4,6 @@ import { platformInfo } from '@/utils/platformInfo';
 import { PlatformType } from '@prisma/client';
 import { ArrowRight } from 'lucide-react';
 import React from 'react';
-import toast from 'react-hot-toast';
 
 interface Props {
     links: {
@@ -17,16 +16,14 @@ const SocialIcons = ({ links }: Props) => {
     return (
         <div className="flex flex-col gap-4">
             {links.map((link) => (
-                <button
+                <a
                     key={link.platform}
+                    href={link.url}
                     className={cn(
                         'flex items-center justify-between px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-opacity-50',
                         platformInfo[link.platform as PlatformType].color,
                     )}
-                    onClick={() => {
-                        navigator.clipboard.writeText(link.url);
-                        toast.success('Copied to clipboard');
-                    }}
+                    target="_blank"
                 >
                     <span className="flex gap-2 items-center">
                         {platformInfo[link.platform as PlatformType].icon}
@@ -35,7 +32,7 @@ const SocialIcons = ({ links }: Props) => {
                         </span>
                     </span>
                     <ArrowRight size={16} />
-                </button>
+                </a>
             ))}
         </div>
     );
