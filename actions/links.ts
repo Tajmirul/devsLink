@@ -25,7 +25,7 @@ export const updateLinksAction = async (
         order: number;
     }[],
 ) => {
-    authCheck();
+    await authCheck();
     const user = await getCurrentUser();
 
     await linkUpdateDto.validate({ links }, { abortEarly: false });

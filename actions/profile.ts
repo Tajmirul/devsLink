@@ -12,7 +12,7 @@ import { getCurrentUser } from '@/utils/session';
 import { revalidatePath } from 'next/cache';
 
 export const profileUpdateAction = async (data: FormData) => {
-    authCheck();
+    await authCheck();
     const user = await getCurrentUser();
 
     const dataObj = formDataToObject(data) as ProfileUpdateDtoType & {
