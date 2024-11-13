@@ -11,7 +11,7 @@ This is a Guru level challenge in [Frontend Mentor](https://www.frontendmentor.i
 - Save details to a database (build the project as a full-stack app)
 - Create an account and log in (add user authentication to the full-stack app)
 
-**Note: Please login and checkout the editor which is the most challenging part of the application**
+***Note: Please login and checkout the editor which is the most challenging part of the application***
 
 ## Project Setup
 
