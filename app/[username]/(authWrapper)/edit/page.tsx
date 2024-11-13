@@ -30,10 +30,7 @@ const Page = () => {
         validateOnBlur: true,
         onSubmit: async (values) => {
             try {
-                const res = await profileUpdateAction(
-                    user!.id,
-                    objectToFormData(values),
-                );
+                const res = await profileUpdateAction(objectToFormData(values));
 
                 formik.setFieldValue('avatar', res.avatar);
                 toast.success('Your profile is updated');

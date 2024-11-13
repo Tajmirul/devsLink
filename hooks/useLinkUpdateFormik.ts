@@ -4,7 +4,6 @@ import {
     LinkUpdateDtoType,
 } from '@/app/[username]/(authWrapper)/links/link-update.dto';
 import { useFormik } from 'formik';
-import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
@@ -13,15 +12,12 @@ const initialValues: LinkUpdateDtoType = {
 };
 
 export const useLinkUpdateFormik = (links: LinkUpdateDtoType['links']) => {
-    const { data: session } = useSession();
-
     const formik = useFormik({
         initialValues,
         validationSchema: linkUpdateDto,
         onSubmit: async (values) => {
             try {
                 const links = await updateLinksAction(
-                    session!.user.id,
                     values.links.map((link, index) => ({
                         ...link,
                         order: index,

@@ -5,25 +5,21 @@ import {
     ProfileUpdateDtoType,
 } from '@/app/[username]/(authWrapper)/edit/profile-update.dto';
 import prisma from '@/prisma/client';
+import { authCheck } from '@/utils/authCheck';
 import { deleteFile, uploadFile } from '@/utils/file-manager';
 import { formDataToObject } from '@/utils/formData';
+import { getCurrentUser } from '@/utils/session';
 import { revalidatePath } from 'next/cache';
 
-export const profileUpdateAction = async (id: string, data: FormData) => {
+export const profileUpdateAction = async (data: FormData) => {
+    authCheck();
+    const user = await getCurrentUser();
+
     const dataObj = formDataToObject(data) as ProfileUpdateDtoType & {
         avatar: File;
     };
 
     await profileUpdateDto.validate(dataObj);
-
-    // check if user exists
-    const user = await prisma.user.findUnique({
-        where: { id },
-    });
-
-    if (!user) {
-        throw new Error('User not found');
-    }
 
     // upload the new file to vercel
     let newAvatarUrl;
@@ -33,11 +29,12 @@ export const profileUpdateAction = async (id: string, data: FormData) => {
     }
 
     // if new file uploaded and previous file exists, delete old file
-    if (dataObj.avatar instanceof File && user.avatar) deleteFile(user.avatar);
+    if (dataObj.avatar instanceof File && user!.avatar)
+        deleteFile(user!.avatar);
 
     // Update user profile
     const newUser = await prisma.user.update({
-        where: { id },
+        where: { id: user!.id },
         data: {
             ...dataObj,
             avatar: newAvatarUrl,

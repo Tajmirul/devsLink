@@ -1,6 +1,8 @@
 'use server';
 import { linkUpdateDto } from '@/app/[username]/(authWrapper)/links/link-update.dto';
 import prisma from '@/prisma/client';
+import { authCheck } from '@/utils/authCheck';
+import { getCurrentUser } from '@/utils/session';
 import { PlatformType } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
@@ -16,7 +18,6 @@ export const getLinks = async (userId: string) => {
 };
 
 export const updateLinksAction = async (
-    userId: string,
     links: {
         id?: string;
         platform: PlatformType;
@@ -24,6 +25,9 @@ export const updateLinksAction = async (
         order: number;
     }[],
 ) => {
+    authCheck();
+    const user = await getCurrentUser();
+
     await linkUpdateDto.validate({ links }, { abortEarly: false });
 
     // delete all links of the user that has id but not in the new links
@@ -33,7 +37,7 @@ export const updateLinksAction = async (
 
     await prisma.link.deleteMany({
         where: {
-            userId,
+            userId: user!.id,
             NOT: {
                 id: {
                     in: linksToDelete,
@@ -65,7 +69,7 @@ export const updateLinksAction = async (
         data: links
             .filter((link) => !link.id)
             .map((link) => ({
-                userId,
+                userId: user!.id,
                 platform: link.platform,
                 url: link.url,
                 order: link.order,
@@ -74,5 +78,5 @@ export const updateLinksAction = async (
 
     revalidatePath('/[username]/(authWrapper)', 'layout');
 
-    return await getLinks(userId);
+    return await getLinks(user!.id);
 };
