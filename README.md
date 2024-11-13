@@ -12,6 +12,7 @@ This is a Guru level challenge in [Frontend Mentor](https://www.frontendmentor.i
 - Create an account and log in (add user authentication to the full-stack app)
 
 ***Note: Please login and checkout the editor which is the most challenging part of the application***
+You can login using this credentials: username is `john`, password is `12345678`
 
 ## Project Setup
 
