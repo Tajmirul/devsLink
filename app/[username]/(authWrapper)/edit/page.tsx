@@ -11,6 +11,7 @@ import FileInput from '@/components/input/FileInput';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { objectToFormData } from '@/utils/formData';
+import { useRouter } from 'next/navigation';
 
 const initialValues: ProfileUpdateDtoType = {
     firstName: '',
@@ -22,6 +23,7 @@ const initialValues: ProfileUpdateDtoType = {
 
 const Page = () => {
     const { data: session } = useSession();
+    const router = useRouter();
     const user = session?.user;
 
     const formik = useFormik({
@@ -34,6 +36,11 @@ const Page = () => {
 
                 formik.setFieldValue('avatar', res.avatar);
                 toast.success('Your profile is updated');
+
+                if (user?.username !== res.username) {
+                    router.push(`/${res.username}/edit`);
+                    formik.setFieldValue('username', res.username);
+                }
             } catch (err: any) {
                 toast.error(err.message);
             }
