@@ -1,4 +1,8 @@
 # devLinks - A link sharing app (highest level of difficulty "Guru" in Frontend Mentor)
+
+***Note: Please login and checkout the editor which is the most challenging part of the application***
+You can login using this credentials: username is `john`, password is `12345678`
+
 This is a Guru level challenge in [Frontend Mentor](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT). In this project, I built a fully-functional link-sharing app for developers! I practiced working with image uploads, repeater fields, drag-and-drop, and more! Here is a list of what I did in this project:
 - Create, read, update, delete links and see previews in the mobile mockup
 - Receive validations if the links form is submitted without a URL or with the wrong URL pattern for the platform
@@ -10,9 +14,6 @@ This is a Guru level challenge in [Frontend Mentor](https://www.frontendmentor.i
 - See hover and focus states for all interactive elements on the page
 - Save details to a database (build the project as a full-stack app)
 - Create an account and log in (add user authentication to the full-stack app)
-
-***Note: Please login and checkout the editor which is the most challenging part of the application***
-You can login using this credentials: username is `john`, password is `12345678`
 
 ## Project Setup
 
